@@ -1,0 +1,79 @@
+pipeline {
+    agent any
+
+    environment {
+        REPO_URL = 'https://github.com/your-username/your-app-repo.git'
+        BRANCH = 'main'
+        BUILD_DIR = 'app/'
+    }
+
+    stages {
+        // Stage 1: Checkout Code
+        stage('Checkout') {
+            steps {
+                git branch: "${BRANCH}", url: "${REPO_URL}"
+            }
+        }
+
+        // Stage 2: Build
+        stage('Build') {
+            steps {
+                script {
+                    // Jika menggunakan Java (Maven)
+                    if (fileExists("${BUILD_DIR}/pom.xml")) {
+                        echo "Building Java project using Maven..."
+                        sh 'mvn clean package -DskipTests'
+                    }
+                    // Jika menggunakan Go
+                    else if (fileExists("${BUILD_DIR}/go.mod")) {
+                        echo "Building Go project..."
+                        sh 'go build -o app ./'
+                    } else {
+                        error "Tidak ditemukan file pom.xml atau go.mod. Proyek tidak dikenali sebagai Java atau Go."
+                    }
+                }
+            }
+        }
+
+        // Stage 3: Test
+        stage('Test') {
+            steps {
+                script {
+                    // Menjalankan testing untuk Java atau Go
+                    if (fileExists("${BUILD_DIR}/pom.xml")) {
+                        echo "Running tests for Java project..."
+                        sh 'mvn test'
+                    } else if (fileExists("${BUILD_DIR}/go.mod")) {
+                        echo "Running tests for Go project..."
+                        sh 'go test ./...'
+                    }
+                }
+            }
+        }
+
+        // Stage 4: Deploy
+        stage('Deploy') {
+            steps {
+                script {
+                    // Men-deploy aplikasi menggunakan Docker
+                    if (fileExists("${BUILD_DIR}/pom.xml")) {
+                        echo "Deploying Java application using Docker..."
+                        sh 'docker build -t your-java-app .'
+                        sh 'docker run -d -p 8080:8080 your-java-app'
+                    } else if (fileExists("${BUILD_DIR}/go.mod")) {
+                        echo "Deploying Go application using Docker..."
+                        sh 'docker build -t your-go-app .'
+                        sh 'docker run -d -p 8080:8080 your-go-app'
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Membersihkan workspace setelah selesai
+            cleanWs()
+        }
+    }
+}

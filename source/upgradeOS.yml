@@ -1,0 +1,32 @@
+---
+- name: Upgrade System and Print Changes (Debian/Ubuntu)
+  hosts: upgrade
+  become: yes
+  tasks:
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      register: apt_cache_update
+      # Agar cache diperbarui sebelum upgrade
+      notify:
+        - Show apt cache update results
+
+    - name: Upgrade all packages
+      apt:
+        upgrade: dist
+        autoremove: yes
+        autoclean: yes
+      register: upgrade_result
+      # Menjalankan upgrade seluruh paket
+      notify:
+        - Show upgrade results
+
+  handlers:
+    - name: Show apt cache update results
+      debug:
+        msg: "APT cache updated: {{ apt_cache_update }}"
+
+    - name: Show upgrade results
+      debug:
+        msg: "Upgrade Results: {{ upgrade_result }}"
