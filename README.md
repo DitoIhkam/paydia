@@ -45,7 +45,8 @@ Didalam jenkins, ada beberapa tahap (stages) seperti Checkout, Build, Test, dan 
 * Install plugin Jenkins yang diperlukan seperti Git, Pipeline, dan Docker (jika menggunakan Docker untuk deploy).
 * Pastikan proyek (Java atau Go) sudah tersedia di repository Github.
 
-Jenkins file ada di file berikut (file Jenkinsfile)
+Jenkins file ada di file berikut [Jenkinsfile](https://github.com/DitoIhkam/paydia/blob/main/source/Jenkinsfile)
+
 
 
 A. environment:
@@ -95,15 +96,19 @@ Pipeline akan berjalan otomatis ketika Anda melakukan commit atau push ke reposi
 # 3.2 Skrip Bash
 
 1. Generate Data first_name, last_name, pekerjaan, join_date, deskripsi. Berikut adalah hasil data nya
-(gambar data2)
+![alt text](https://github.com/DitoIhkam/paydia/blob/main/img/Bash1%20generate.png?raw=true)
 2. Saya perlu membuat bash script terlebih dahulu dengan cara mengoding isi bash script dan membuat file itu menjadi file yang bisa dijalankan menggunakan bash script dengan menggunakan command `chmod +x joindate2.sh`
 3. Skrip bash itu digunakan untuk mengambil data untuk menampilkan first_name dan last_name berdasarkan join_date, serta mengambil data untuk menampilkan deskripsi untuk pekerjaan tertentu.
 Berikut adalah hasilnya 
-(gambar hasil)
+![alt text](https://github.com/DitoIhkam/paydia/blob/main/img/Bash2%20hasil.png?raw=true)
+
+dan ini adalah skrip bashnya
+[skripbash.sh](https://github.com/DitoIhkam/paydia/blob/main/source/skripbash.sh)
 
 # 3.3 Upgrade OS
 
-Berikut untuk proses upgrade OS menggunakan ansible playbook dan scriptnya
+Berikut untuk proses upgrade OS menggunakan ansible playbook
+![alt text](https://github.com/DitoIhkam/paydia/blob/main/img/3.3%20upgradeOS.png?raw=true)
 
-(gambar ansible upgrade os)
-(script upgradeOS.yml)
+dan ini adalah scriptnya
+[upgradeOS.yml](https://github.com/DitoIhkam/paydia/blob/main/source/upgradeOS.yml)
