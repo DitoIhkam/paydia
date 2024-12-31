@@ -1,28 +1,38 @@
+![alt text](?raw=true)
 # 1. Docker 
 
 Pertama saya membuat vm menggunakan idcloudhost
 
-(gambar idcloudhost)
+![alt text](https://github.com/DitoIhkam/paydia/blob/main/img/1.%20IDCLOUDHOST.png?raw=true)
+
 
 Lalu saya mengupdate package dan membuat file Dockerfile untuk di build dan di run, beserta default.conf yang akan dimasukkan kedalam docker container untuk web server nginx
+![alt text](https://github.com/DitoIhkam/paydia/blob/main/img/2.%20APT%20UPDATE%2C%20buat%20Dockerfile%2C%20dan%20reverseproxy.png?raw=true)
+![alt text](https://github.com/DitoIhkam/paydia/blob/main/img/2.%20folder2%20nya.png?raw=true)
 
 Karna Docker belum terinstall di vm ini, saya sudah menyiapkan script ansible untuk menginstall docker dari lokal ke vm target di idcloudhost
 
+
 (gambar install docker)
+![alt text](https://github.com/DitoIhkam/paydia/blob/main/img/3.%20Install%20Docker.png?raw=true)
 (gambar docker version)
+![alt text](https://github.com/DitoIhkam/paydia/blob/main/img/3.%20Dockerversion.png?raw=true)
 
 Lalu saya membuild docker dengan perintah dibawah, ada sekali kesalahan karna saya menaruh file default.conf yang berbeda. Walaupun saya tidak tahu default.conf sudah ada atau belum, saya pastikan ada dengan mengcopy script default.conf yang saya buat agar dimasukkan kedalam docker container yang akan saya build dan saya run.
 ```
 sudo docker build -t nginx-reverse-proxy .
 ```
-(gambar build docker)
+
+![alt text](https://github.com/DitoIhkam/paydia/blob/main/img/4.%20Build%20Docker.png?raw=true)
 
 Lalu saya run dockernya. 
-(run docker)
+![alt text](https://github.com/DitoIhkam/paydia/blob/main/img/5.%20Lalu%20saya%20run%20Docker%20nya.png?raw=true)
 
 dan ini hasilnya, dia mendirect ke 2 website
 
+![alt text](https://github.com/DitoIhkam/paydia/blob/main/img/6.%20gambar%20hasil%20(1).png?raw=true)
 (gambar web 1)
+![alt text](https://github.com/DitoIhkam/paydia/blob/main/img/6.%20gambar%20hasil%20(2).png?raw=true)
 (gambar web 2)
 
 
@@ -81,6 +91,15 @@ B. Trigger Pipeline:
 
 Pipeline akan berjalan otomatis ketika Anda melakukan commit atau push ke repository yang terhubung dengan Jenkins.
 
+
+# 3.2 Skrip Bash
+
+1. Generate Data first_name, last_name, pekerjaan, join_date, deskripsi. Berikut adalah hasil data nya
+(gambar data2)
+2. Saya perlu membuat bash script terlebih dahulu dengan cara mengoding isi bash script dan membuat file itu menjadi file yang bisa dijalankan menggunakan bash script dengan menggunakan command `chmod +x joindate2.sh`
+3. Skrip bash itu digunakan untuk mengambil data untuk menampilkan first_name dan last_name berdasarkan join_date, serta mengambil data untuk menampilkan deskripsi untuk pekerjaan tertentu.
+Berikut adalah hasilnya 
+(gambar hasil)
 
 # 3.3 Upgrade OS
 
